@@ -1,9 +1,9 @@
 from flask import Flask, jsonify, request
 import time
 
-app = Flask(__name__)
+application = Flask(__name__)
 
-@app.route('/healthcheck')
+@application.route('/healthcheck')
 def health_check():
     return jsonify(application='load-server',
                    status='OK',
@@ -12,7 +12,7 @@ def health_check():
                    NODE_ENV='python :)')
 
 
-@app.route('/debug', methods=['GET', 'POST', 'PATCH', 'PUT', 'DELETE'])
+@application.route('/debug', methods=['GET', 'POST', 'PATCH', 'PUT', 'DELETE'])
 def debug():
     sleep_in_ms = time_to_wait()
     r_code = int(request.args.get('r_code'))
@@ -28,7 +28,7 @@ def time_to_wait():
     return float(sleep_in_ms)
 
 
-@app.route('/')
+@application.route('/')
 def root():
     endpoints = {'debug': '/debug{?r_code,time*}', 'healthcheck': '/healthcheck'}
     return jsonify(supported_endpoints=endpoints)
@@ -36,4 +36,4 @@ def root():
 
 if __name__ == '__main__':
 #    app.run(port=8080, debug=True)
-    app.run('0.0.0.0')
+    application.run('0.0.0.0')
