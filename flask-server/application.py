@@ -26,6 +26,7 @@ def debug():
     response.status_code = r_code
     return response
 
+
 @application.route(main_route + '/json_in_json_out', methods=['GET', 'POST'])
 def json_in_json_out():
     if request.method == 'POST':
@@ -34,6 +35,7 @@ def json_in_json_out():
             return jsonify(response=json_data)
         except:
             return error_handler('Unable to parse json')
+
 
 @application.route(main_route + '/')
 def root():
